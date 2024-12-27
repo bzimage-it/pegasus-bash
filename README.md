@@ -1,8 +1,15 @@
 # pegasus-bash
-Bash improvement and enhancements likes: parameter management via environment variables, logging, debugging and other.
-
+a Bash API improvement and enhancements with logging, debugging, command parameters and more.
+* includes different modules to be imported via ```source(1)```
+* ```log```: a powerfull logging API with log levels, colors, custom formatting, writes to different output descriptors
+* ```param2env``` : maps command line parameters to ordinary environment variables, likes ```env(1)``` command. A valid alternarnavite to classic '''getopt''' or '''--option''' style cli.
+* ```location``` : knows where its own script is located, regardless of symlinks.
+* ```temp``` : provides temporary files via ```mktemp(1)```, hold names in order to be remoted at exit; the programmer can forget names and call a cleanup method when exit
+* ```debug``` : provides ```assert()``` function, bash strack and unix stack trace dump 
 
 # Quick reference
+
+a [quickstart.sh](examples/quickstart.sh) script using ```pegasus-bash```:
 
 ```
 $ bash quickstart.sh foo=123 A=astring Directory= /tmp/

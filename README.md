@@ -51,6 +51,7 @@ the script ```bash quality.sh``` helps to run static analysis (via [shellcheck](
 
 Any recent linux distro shall works (but also not-too-much-older ones!)  It have been tested successfully on:
 * ```bash 5.2.21``` on ```Ubuntu 24.04.1 LTS```
+
 Let me know other test setup that is working or not. Thank you!
 
 # To do

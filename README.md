@@ -4,8 +4,8 @@ a Bash API improvement and enhancements with logging, debugging, command paramet
 * ```log```: a powerful logging API with log levels, colors, custom formatting, writes to different output descriptors
 * ```param2env``` : maps command line parameters to ordinary environment variables, likes ```env(1)``` command. A valid alternative to classic ```getopt``` or ```--option``` style cli.
 * ```location``` : knows where its own script is located, regardless of symlinks.
-* ```temp``` : provides temporary files via ```mktemp(1)```, hold names in order to be remoted at exit; the programmer can forget names and call a cleanup method when exit
-* ```debug``` : provides ```assert()``` function, a bash stack and a unix stack trace dump functions
+* ```temp``` : provides temporary files via ```mktemp(1)```, hold names in order to be removed ones the script terminates; the programmer simply calls a cleanup method when exit.
+* ```debug``` : provides ```assert()``` function, plus a bash stack and a unix stack trace dump functions
 
 # Quick start
 

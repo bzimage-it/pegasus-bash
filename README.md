@@ -7,20 +7,6 @@ a Bash API improvement and enhancements with logging, debugging, command paramet
 * ```temp``` : provides temporary files via ```mktemp(1)```, hold names in order to be removed ones the script terminates; the programmer simply calls a cleanup method when exit.
 * ```debug``` : provides ```assert()``` function, plus a bash stack and a unix stack trace dump functions
 
-# Quick start
-
-a [quickstart.sh](examples/quickstart.sh) script using ```pegasus-bash```:
-
-```
-$ cd examples
-$ bash quickstart.sh foo=123 A=astring Directory= /tmp/
-```
-
-![Screenshot_2024-12-27_18-22-55](https://github.com/user-attachments/assets/ed54f033-3ebc-4b87-9ab8-4a83e2a70e06)
-
-# Advance and colored logging
-![Screenshot_2024-12-27_18-17-53](https://github.com/user-attachments/assets/a8e6a643-f39e-4ab1-acca-7d09248266f1)
-
 # Quick install
 
 1. get ```pegasus-bash```:
@@ -36,6 +22,20 @@ source $PEGASUS_BASH_ROOT/pegasus-bash.sh all
 # ....my code follows....
 ```
 note that setting of ```PEGASUS_BASH_ROOT``` is mandatory before to ```source(1)``` ```pegasus-bash```
+
+# Quick start
+
+a [quickstart.sh](examples/quickstart.sh) script using ```pegasus-bash```:
+
+```
+$ cd examples
+$ bash quickstart.sh foo=123 A=astring Directory= /tmp/
+```
+
+![Screenshot_2024-12-27_18-22-55](https://github.com/user-attachments/assets/ed54f033-3ebc-4b87-9ab8-4a83e2a70e06)
+
+# Advance and colored logging
+![Screenshot_2024-12-27_18-17-53](https://github.com/user-attachments/assets/a8e6a643-f39e-4ab1-acca-7d09248266f1)
 
 # Quality 
 target of this project is to have good testing and a good code review. This will be available in 1.0.0 release.

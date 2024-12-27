@@ -47,7 +47,7 @@ see [log.sh example](examples/log.sh)
 # Quality and testing
 target of this project is to have good testing and a good code review. This will be available in 1.0.0 release.
 
-the script ```bash quality.sh``` helps to run static analysis (via [shellcheck](https://www.shellcheck.net/)) and dynamic/unit testing (via [bats-core](https://github.com/bats-core/bats-core); you needs both of them to test ```pegasus-bash``` but they are not needed to use the library.
+the script ```bash quality.sh``` helps to run static analysis (via [shellcheck](https://www.shellcheck.net/)) and dynamic/unit testing (via [bats-core](https://github.com/bats-core/bats-core)); you needs both of them to test ```pegasus-bash```, but they are not needed to use the library.
 
 Any recent linux distro shall works (but also not-too-much-older ones!)  It have been tested successfully on:
 * ```bash 5.2.21`` on ```Ubuntu 24.04.1 LTS"

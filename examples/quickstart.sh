@@ -7,6 +7,7 @@
 # but we set manually here, just because is a demo:
 PEGASUS_BASH_ROOT="$(readlink -f ..)"
 
+# define a model for the command line, declare names, types, default values and help:
 declare -A PEGASUS_VALID_ENV_PARAMS=(   [A]=upstring [SOMEBOOL]=bool   [ANOTHERBOOL]=bool  [Directory]=dir [File]=file)
 declare -A PEGASUS_VALID_ENV_DEFAULT=(  [A]=avalue   [SOMEBOOL]=TRUE   [ANOTHERBOOL]=FALSE [Directory]=.   [File]=)
 declare -A PEGASUS_VALID_ENV_HELP=(
@@ -19,6 +20,22 @@ declare -A PEGASUS_VALID_ENV_HELP=(
 
 PEGASUS_BASH_IMPORT_VERBOSE=1 # default is 0, do not write info during parse
 source $PEGASUS_BASH_ROOT/pegasus-bash.sh all
+
+PEGASUS_BASH_ASSERT_ABORT=5
+set -u
+# configure your 'traps' to exit cleanly:
+trap on_exit EXIT QUIT
+
+# configure your own 'on_exit' function. dont forget to call cleanup_temp()
+function on_exit() {
+    cleanup_temp
+    
+    # some other code here:
+    # ...
+
+    bash_stack_trace debug
+    unix_stack_trace debug
+}
 
 log notif "my own canonical full name is: $PEGASUS_SCRIPT_FULL"
 log notif "my own canonical location is : $PEGASUS_SCRIPT_DIR"
@@ -37,6 +54,12 @@ else
     # we do not want to allow any extra parameters
     if [ ${#PEGASUS_ENV_PARAMS_NOT_PROCESSED[@]} -eq  0 ]; then
 	log info "No extra params, ok"
+
+	wrap_mktemp 
+	tmp=$WRAP_MKTEMP
+	assert '[[ -f $tmp ]]' "file do not exists any more!" 3	
+	assert '[[ $Directory == "/tmp" ]]' "Directory is not /tmp, abort" 6
+	
     else
 	log error "some parameter is unknown ${PEGASUS_ENV_PARAMS_NOT_PROCESSED[@]}"
 	abort 10 "exit the script"

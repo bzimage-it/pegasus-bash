@@ -38,7 +38,7 @@ $ bash quickstart.sh foo=123 A=astring Directory= /tmp/
 
 ![Screenshot_2024-12-27_18-22-55](https://github.com/user-attachments/assets/ed54f033-3ebc-4b87-9ab8-4a83e2a70e06)
 
-# Advance and colored logging
+# Advanced and colored logging
 ![Screenshot_2024-12-27_18-17-53](https://github.com/user-attachments/assets/a8e6a643-f39e-4ab1-acca-7d09248266f1)
 
 # Quality 

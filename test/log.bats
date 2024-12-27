@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
-PEGASO_BASH_IMPORT_VERBOSE=0
-export PEGASO_BASH_ROOT="$(readlink -f .)"
+PEGASUS_BASH_IMPORT_VERBOSE=0
+export PEGASUS_BASH_ROOT="$(readlink -f .)"
 test ! -d test && echo "bats test suite shall be executed from main directory; a 'test' directory was expected here" && exit 1
 bats_require_minimum_version 1.5.0
 
@@ -18,15 +18,15 @@ poison() {
 ret=0
 
 @test "simple import" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     test $ret != 0 && echo $ret && exit $ret
-    test "${PEGASO_BASH_IMPORTED[log]}" == 1 || exit 2
+    test "${PEGASUS_BASH_IMPORTED[log]}" == 1 || exit 2
     output=$(log_conf level)
     [ "$output" == 'INFO' ]
 }
 
 @test "change log level :out" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     # log_n2str=("OUT"      "CRIT"  "ERROR" "WARN"  "NOTIF" "INFO"  "DEBUG")
     # set minimum log level:
     log_conf set level out    
@@ -41,7 +41,7 @@ ret=0
 }
 
 @test "change log level :critical" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf set level crit
     for LL in out crit; do
 	output=$(log $LL "is_logged")
@@ -57,7 +57,7 @@ ret=0
 }
 
 @test "change log level :error" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf set level err
     for LL in out crit error; do
 	output=$(log $LL "is_logged")
@@ -73,7 +73,7 @@ ret=0
 }
 
 @test "change log level :warning" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf set level warn
     for LL in out crit error warn; do
 	output=$(log $LL "is_logged")
@@ -89,7 +89,7 @@ ret=0
 }
 
 @test "change log level :notification" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf set level notif
     for LL in out crit error warn notif; do
 	output=$(log $LL "is_logged")
@@ -104,7 +104,7 @@ ret=0
     done       
 }
 @test "change log level :info" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf set level info
     for LL in out crit error warn notif info; do
 	output=$(log $LL "is_logged")
@@ -120,7 +120,7 @@ ret=0
 }
 
 @test "change log level :debug" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf set level debug
     for LL in out crit error warn notif info debug; do
 	output=$(log $LL "is_logged")
@@ -132,7 +132,7 @@ ret=0
 }
 
 @test "Aliases" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     for L in any force silent sil s o out output; do
 	echo $L
 	log_conf set level $L
@@ -166,7 +166,7 @@ ret=0
 }
 
 @test "change file descriptor for stderr " {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     # we want to write some level to stderr:
     log_set_fd 2 crit err
     log out
@@ -174,7 +174,7 @@ ret=0
 }
 
 @test "change file descriptor for levels " {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     # log everything:
     log_conf set log_on_bad_level ABORT
     log_conf set level debug
@@ -258,7 +258,7 @@ ret=0
 }
 
 @test "test log_conf: bad params" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf mode internal
     log_conf set log_on_bad_level FAIL
     run -30 log_conf xxxxxxxxx
@@ -269,7 +269,7 @@ ret=0
 }
 
 @test "test log_conf: log_color_mode" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf mode internal
     # test "set": each test do:
     # 1 check default value
@@ -287,7 +287,7 @@ ret=0
     [[ $log_color_mode == YESLEVEL ]]   
 }
 @test "test log_conf: log_on_bad_level" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf mode internal
     
     [[ $log_on_bad_level == STDERR ]]
@@ -298,7 +298,7 @@ ret=0
     [[ $log_on_bad_level == LOGDEBUG ]]
 }
 @test "test log_conf: log_on_msg" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf mode internal
     
     [[ $log_on_msg == STDERR ]]
@@ -309,7 +309,7 @@ ret=0
     [[ $log_on_msg == LOGOUT ]]
 }
 @test "test log_conf: log_stack_delta" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf mode internal
     [[ $log_stack_delta == 1 ]]
     log_conf set log_stack_delta 3
@@ -319,7 +319,7 @@ ret=0
     [[ $log_stack_delta == 3 ]]
 }
 @test "test log_conf: mode default" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     poison log_level log_color_mode log_timestamp_format log_source_format log_stack_delta
     log_conf mode default
     [[ $log_level == 5 ]]
@@ -329,7 +329,7 @@ ret=0
     [[ $log_stack_delta = 1 ]]
 }
 @test "test log_conf: mode debug-simple" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     poison log_level log_color_mode log_timestamp_format log_source_format log_stack_delta
     log_conf mode debug-simple
     [[ $log_level == 6 ]]
@@ -339,7 +339,7 @@ ret=0
     [[ $log_stack_delta == 1 ]]
 }
 @test "test log_conf: mode debug-full" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     poison log_level log_color_mode log_timestamp_format log_source_format log_stack_delta
     log_conf mode debug-full
     [[ $log_level == 6 ]]
@@ -350,7 +350,7 @@ ret=0
 }
 
 @test "test log_conf: color" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     # a bold cyan:
     newcolor_code='\033[0;35m'
     log_conf mode internal
@@ -369,7 +369,7 @@ ret=0
 }
 
 @test "test log_conf: info" {   
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     log_conf mode internal
     run log_conf level
     [[ $output == DEBUG ]]    
@@ -388,7 +388,7 @@ ret=0
 }
 
 @test "test abort" {
-    source "$PEGASO_BASH_ROOT"/pegaso-bash.sh log || ret=$?
+    source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh log || ret=$?
     
     run -1 abort "return 1"
     run -2 abort 2 "return 2"

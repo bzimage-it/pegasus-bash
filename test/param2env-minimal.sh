@@ -3,6 +3,6 @@
 VARNAME="$1"
 shift
 
-source "$PEGASO_BASH_ROOT"/pegaso-bash.sh param2env
+source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh param2env
 
 eval echo \$$VARNAME

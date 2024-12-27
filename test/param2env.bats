@@ -1,13 +1,14 @@
 #!/usr/bin/env bats
 
-PEGASO_BASH_IMPORT_VERBOSE=0
-export PEGASO_BASH_ROOT="$(readlink -f .)"
+PEGASUS_BASH_IMPORT_VERBOSE=0
+export PEGASUS_BASH_ROOT="$(readlink -f .)"
 test ! -d test && echo "bats test suite shall be executed from main directory; a 'test' directory was expected here" && exit 1
+bats_require_minimum_version 1.5.0
 
 ret=0
-source "$PEGASO_BASH_ROOT"/pegaso-bash.sh param2env || ret=$?
+source "$PEGASUS_BASH_ROOT"/pegasus-bash.sh param2env || ret=$?
 test $ret != 0 && echo $ret && exit $ret
-test "${PEGASO_BASH_IMPORTED[param2env]}" != 1 && exit 2
+test "${PEGASUS_BASH_IMPORTED[param2env]}" != 1 && exit 2
 
 tmp=
 cmd() {
@@ -27,7 +28,7 @@ cmd() {
     param2env_process --A A=str
     [ $? == 0 ]
     [ "$A" == "STR" ]
-    [ "${PEGASO_ENV_PARAMS_NOT_PROCESSED[0]}" == "--A" ]
+    [ "${PEGASUS_ENV_PARAMS_NOT_PROCESSED[0]}" == "--A" ]
 }
 
 @test "basic test positive2 with default" {
@@ -39,8 +40,8 @@ cmd() {
     [ $? == 0 ]
     [ -f $tmp ]
     [ "$File" == "$tmp" ]
-    [ "${PEGASO_ENV_PARAMS_NOT_PROCESSED[0]}" == "B=A" ]
-    [ "${PEGASO_ENV_PARAMS_NOT_PROCESSED[1]}" == "OTHER=X1" ]
+    [ "${PEGASUS_ENV_PARAMS_NOT_PROCESSED[0]}" == "B=A" ]
+    [ "${PEGASUS_ENV_PARAMS_NOT_PROCESSED[1]}" == "OTHER=X1" ]
     [ -z "$S" ]    
     param2env_set_defaults
     [ "$S" == '__undef__' ]
@@ -51,8 +52,8 @@ cmd() {
     param2env_process B=A File= $tmp OTHER=X2 
     [ "$File" == "$tmp" ]
     [ "$S" == "__undef__" ]
-    [ "${PEGASO_ENV_PARAMS_NOT_PROCESSED[0]}" == "B=A" ]
-    [ "${PEGASO_ENV_PARAMS_NOT_PROCESSED[1]}" == "OTHER=X2" ]
+    [ "${PEGASUS_ENV_PARAMS_NOT_PROCESSED[0]}" == "B=A" ]
+    [ "${PEGASUS_ENV_PARAMS_NOT_PROCESSED[1]}" == "OTHER=X2" ]
 }
 
 @test "basic test positive 2 no default 2: Dir+File" {

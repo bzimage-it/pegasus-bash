@@ -22,14 +22,14 @@ unset log_source_short_info # internal, for optimize execution time
 declare -A log_source_short_info
 declare -i log_level=5 # set a starting level
 declare -u log_on_bad_level=ABORT # define the behavoir on log level param error; value: ABORT | FAIL | LOGDEBUG | LOGERROR      | STDOUT | STDERR | IGNORE
-declare -u log_on_msg=LOGDEBUG # define the behavoir on some application log error or param or message; value: LOGDEBUG | LOGERROR  | STDOUT | STDERR | IGNORE
-declare -u log_on_error=LOGDEBUG
-declare -u log_color_mode=AUTOLEVEL # set color mode for level printing; YESLEVEL | YESFULL | NO | AUTOLEVEL | AUTOFULL (Auto write color on terminal, no color on file, uses -t <fd>)
-declare log_timestamp_format="" # a strftime(3) format for logging
+declare -u log_on_msg= # define the behavoir on some application message value: LOGDEBUG | LOGOUT  | STDOUT | STDERR | IGNORE
+declare -u log_on_error= # define the behavoir on some application log error or param or message; value: LOGDEBUG | LOGERROR  | STDOUT | STDERR | IGNORE
+declare -u log_color_mode=  # set color mode for level printing; YESLEVEL | YESFULL | NO | AUTOLEVEL | AUTOFULL (Auto write color on terminal, no color on file, uses -t <fd>)
+declare log_timestamp_format= # a strftime(3) format for logging
 # log_source_info; set to empty string to disable
-declare -u log_source_format="%L %F" # contains format in % style to print source code; %s (source filename) %l (line number) %f (function name); if empty, disable source info print.
+declare -u log_source_format= # contains format in % style to print source code; %s (source filename) %l (line number) %f (function name); if empty, disable source info print.
 # provide API to configuration variabiles and customizations:
-declare -u log_stack_delta=1 # hold stack delta information to print source code. with a value of i log will print source code information about BASH_SOURCE[i] and reset it always to 1; default is 1; change this for a one-time-only-log-call to print special information
+declare -u log_stack_delta= # hold stack delta information to print source code. with a value of i log will print source code information about BASH_SOURCE[i] and reset it always to 1; default is 1; change this for a one-time-only-log-call to print special information
 declare -A _log_enum_values=(
     [log_on_bad_level]=ABORT,FAIL,LOGDEBUG,LOGERROR,STDOUT,STDERR,IGNORE
     [log_on_msg]=LOGDEBUG,LOGOUT,STDOUT,STDERR,IGNORE

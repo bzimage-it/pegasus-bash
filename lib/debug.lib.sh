@@ -1,29 +1,22 @@
-# this file is part of the pegaso-bash
+# this file is part of the pegasus-bash
 # it is tipically includedd via source bash command
 
-# PEGASO_DEBUG_OUTPUT hold the file descriptor to write debug output to.
-# special value "LOG" (default value) uses the PEGASO's log module
-PEGASO_DEBUG_OUTPUT=LOG
+# PEGASUS_DEBUG_OUTPUT hold the file descriptor to write debug output to or the debug level if log module shall be used
+PEGASUS_DEBUG_OUTPUT=1
 
 dumpvar () { for var in "$@" ; do echo "$var=${!var}" ; done }
 ################# DEBUG AND STACK TRACE #####################
 # snipped from : 
 # http://stackoverflow.com/questions/685435/bash-stacktrace
-_pegaso_debug_print() {
-    local level="$1"
-    shift
-    if [[ ${PEGASO_DEBUG_OUTPUT?} == "LOG" ]]; then
-	log "$level" "$@"
+_pegasus_debug_print() {
+    if [[ ${PEGASUS_DEBUG_OUTPUT?} =~ ^[0-9]+$ ]]; then
+	echo "$@" >&${PEGASUS_DEBUG_OUTPUT}
     else
-	echo "$@" >&${PEGASO_DEBUG_OUTPUT}
+	log "$PEGASUS_DEBUG_OUTPUT" "$@"
     fi
 }
 
 unix_stack_trace () { # param is the log level
-    local level="$1"
-    test -z "$level" && level=debug
-    log_level_assert "$level"
-    test $? -ge 250 && return 0
     local TRACE=""
     local CP=$$ # PID of the script itself [1]
     local CMDLINE=
@@ -45,16 +38,12 @@ unix_stack_trace () { # param is the log level
         fi
         CP=$PP
     done
-    _pegaso_debug_print "$level" "Unix process backtrace (PID+command line): $TRACE"
+    _pegasus_debug_print "Unix process backtrace (PID+command line): $TRACE"
     # echo -en "$TRACE" | tac | grep -n ":" # using tac to "print in reverse" [3]	
 }
 # snipped from : 
 # http://stackoverflow.com/questions/685435/bash-stacktrace
 bash_stack_trace() { # param is the log level
-    local level="$1"
-    test -z "$level" && level=debug    
-    log_level_assert "$level"
-    test $? -ge 250 && return 0    
     local STACK=""
     # to avoid noise we start with 1 to skip get_stack caller
     local i
@@ -68,34 +57,40 @@ bash_stack_trace() { # param is the log level
         STACK+=$'\n'"   "$func" "$src":"$linen
     done
     STACK+=$'\n';
-    _pegaso_debug_print "$level" "STACK TRACE of \$\$=$$ BASHPID=$BASHPID ${STACK}"
+    _pegasus_debug_print "STACK TRACE of \$\$=$$ BASHPID=$BASHPID ${STACK}"
 }
 
-# PEGASO_BASH_ON_ASSERT define log level on assertion,
+# PEGASUS_BASH_ON_ASSERT define log level on assertion,
 # default : error
-PEGASO_BASH_ASSERT_LOG_LEVEL=error
+PEGASUS_BASH_ASSERT_LOG_LEVEL=error
 
 # if undefiend or empty do not abort on assert;
 # otherwice hold the default exit code on assert (unless given in assert() param itself)
-PEGASO_BASH_ASSERT_ABORT=
+# return code of 'command' is returned
+PEGASUS_BASH_ASSERT_ABORT=
 
 assert() {
     local command="$1"  # Command or expression to evaluate
     local message="${2:-Assertion failed}"  # Error message (optional)
-    local exit_code=${3:-$PEGASO_BASH_ASSERT_ABORT}  # exit code to abort in case of fail; default PEGASO_BASH_ASSERT_ABORT
+    local exit_code=${3:-$PEGASUS_BASH_ASSERT_ABORT}  # exit code to abort in case of fail; default PEGASUS_BASH_ASSERT_ABORT
+    local lineno=
+    local funcname=
+    local filename=
     
     # Execute the command and capture the result
-    if ! eval "$command"; then
-        local lineno="${BASH_LINENO[0]}"  # Line number where the error occurred
-        local funcname="${FUNCNAME[1]:-main}"  # Name of the calling function
-        local filename="${BASH_SOURCE[1]}"  # Source file of the calling script
+    eval "$command"
+    ret=$?
+    if [[ $ret != 0 ]] ; then
+        lineno="${BASH_LINENO[0]}"  # Line number where the error occurred
+        funcname="${FUNCNAME[1]:-main}"  # Name of the calling function
+        filename="${BASH_SOURCE[1]}"  # Source file of the calling script
 
         # Print error details
-	
-        log $PEGASO_BASH_ASSERT_LOG_LEVEL "Assertion failed: $message\n\tCommand: $command\n\tLocation: $filename:$lineno in $funcname"
+	_pegasus_debug_print "$filename:$lineno $funcname | Assertion failed: $command | $message"
         # Exit or continue based on configuration 
-        if [[ -n $PEGASO_BASH_ASSERT_ABORT ]]; then
+        if [[ -n $PEGASUS_BASH_ASSERT_ABORT ]]; then
             abort $exit_code "Assertion failed: $message"
         fi
     fi
+    return $ret
 }

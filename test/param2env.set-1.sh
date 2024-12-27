@@ -1,5 +1,5 @@
 
-declare -A PEGASO_VALID_ENV_PARAMS=(
+declare -A PEGASUS_VALID_ENV_PARAMS=(
     [A]=upstring
     [SOMEBOOL]=bool
     [ANOTHERBOOL]=bool
@@ -10,7 +10,7 @@ declare -A PEGASO_VALID_ENV_PARAMS=(
     [S]=string
 )
 
-declare -A PEGASO_VALID_ENV_DEFAULT=(
+declare -A PEGASUS_VALID_ENV_DEFAULT=(
     [A]=avalue
     [SOMEBOOL]=TRUE
     [ANOTHERBOOL]=FALSE
@@ -21,7 +21,7 @@ declare -A PEGASO_VALID_ENV_DEFAULT=(
     [S]=__undef__
 )
 
-declare -A PEGASO_VALID_ENV_HELP=(
+declare -A PEGASUS_VALID_ENV_HELP=(
     [A]="a string in uppercase"
     [SOMEBOOL]="an example of bool param: YES|Y|1|T|TRUE or 0|N|NO|F|FALSE"
     [ANOTHERBOOL]="another bool param"

@@ -3,7 +3,7 @@
 test ! -d test && echo "expected test dir here. cd to the root path" && exit 1
 
 sc() {
-    shellcheck $* -s bash --norc -P lib:. -x pegaso-bash.sh lib/*.lib.sh
+    shellcheck $* -s bash --norc -P lib:. -x pegasus-bash.sh lib/*.lib.sh
 }
 
 select ITEM in static static-diff test test-x quit

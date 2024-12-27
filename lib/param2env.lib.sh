@@ -1,8 +1,8 @@
 
 function param2env_check() {
-    [[ ${#PEGASO_VALID_ENV_PARAMS[@]} -eq 0 ]] && echo "PEGASO_VALID_ENV_PARAMS not set" >&2 && return 1
-    [[ ${#PEGASO_VALID_ENV_DEFAULT[@]} -eq 0 ]] && echo "PEGASO_VALID_ENV_DEFAULT not set" >&2 && return 2
-    [[ ${#PEGASO_VALID_ENV_HELP[@]} -eq 0 ]] && echo "PEGASO_VALID_ENV_HELP not set" >&2 && return 3
+    [[ ${#PEGASUS_VALID_ENV_PARAMS[@]} -eq 0 ]] && echo "PEGASUS_VALID_ENV_PARAMS not set" >&2 && return 1
+    [[ ${#PEGASUS_VALID_ENV_DEFAULT[@]} -eq 0 ]] && echo "PEGASUS_VALID_ENV_DEFAULT not set" >&2 && return 2
+    [[ ${#PEGASUS_VALID_ENV_HELP[@]} -eq 0 ]] && echo "PEGASUS_VALID_ENV_HELP not set" >&2 && return 3
     return 0
 }
  
@@ -15,10 +15,10 @@ function param2env_help_table() {
     test -z "$format" && format="%-12s  %-8s  %-12s"
     test -z "$fd" && fd=1
     printf "$format DESCRIPTION\n" "NAME" "TYPE" "DEFAULT" >&"$fd"
-    for V in "${!PEGASO_VALID_ENV_HELP[@]}"; do
-	if [[ -v PEGASO_VALID_ENV_HELP[$V] ]]; then
-	    printf -v pp "$format" "$V" "${PEGASO_VALID_ENV_PARAMS[$V]}" "${PEGASO_VALID_ENV_DEFAULT[$V]}" 
-	    echo -e "$pp ${PEGASO_VALID_ENV_HELP[$V]}" >&"$fd"
+    for V in "${!PEGASUS_VALID_ENV_HELP[@]}"; do
+	if [[ -v PEGASUS_VALID_ENV_HELP[$V] ]]; then
+	    printf -v pp "$format" "$V" "${PEGASUS_VALID_ENV_PARAMS[$V]}" "${PEGASUS_VALID_ENV_DEFAULT[$V]}" 
+	    echo -e "$pp ${PEGASUS_VALID_ENV_HELP[$V]}" >&"$fd"
 	fi
     done
     return 0
@@ -28,23 +28,23 @@ function param2env_help_table() {
 function param2env_set_defaults() {
     param2env_check || return $?    
     local V=
-    for V in "${!PEGASO_VALID_ENV_DEFAULT[@]}"; do 
+    for V in "${!PEGASUS_VALID_ENV_DEFAULT[@]}"; do 
 	if [[ ! -v "$V" ]]; then
-	    eval "$V=\"${PEGASO_VALID_ENV_DEFAULT[$V]}\""
-     	    [[ $PEGASO_BASH_IMPORT_VERBOSE -eq 1 ]] && eval echo "PARAM SET DEFAULT: $V=\$$V"
+	    eval "$V=\"${PEGASUS_VALID_ENV_DEFAULT[$V]}\""
+     	    [[ $PEGASUS_BASH_IMPORT_VERBOSE -eq 1 ]] && eval echo "PARAM SET DEFAULT: $V=\$$V"
 	fi
     done
     return 0
 }
 
-# declare -a PEGASO_ENV_PARAMS_NOT_PROCESSED=()
-PEGASO_ENV_PARAMS_NOT_PROCESSED=()
-PEGASO_env_param_errors=0
+# declare -a PEGASUS_ENV_PARAMS_NOT_PROCESSED=()
+PEGASUS_ENV_PARAMS_NOT_PROCESSED=()
+PEGASUS_env_param_errors=0
 
 function param2env_process() {
     param2env_check || return $?
-    PEGASO_env_param_errors=0
-    PEGASO_ENV_PARAMS_NOT_PROCESSED=()
+    PEGASUS_env_param_errors=0
+    PEGASUS_ENV_PARAMS_NOT_PROCESSED=()
     local i=0
     while [[ $# > 0 ]]; do
 	_PP="$1"
@@ -65,8 +65,8 @@ function param2env_process() {
 	shift
 	
 	# echo "VAR=$var VALUE=$value"
-	if [[ -v "PEGASO_VALID_ENV_PARAMS[${var}]" ]]; then
-	    case "${PEGASO_VALID_ENV_PARAMS[${var}]}" in
+	if [[ -v "PEGASUS_VALID_ENV_PARAMS[${var}]" ]]; then
+	    case "${PEGASUS_VALID_ENV_PARAMS[${var}]}" in
 		string)
 		# no checks, any value is valid
 		;;
@@ -80,25 +80,25 @@ function param2env_process() {
 		int)
 		    if [[ ! "$value" == ?(-)+([0-9]) ]] ; then
 			echo "$var has invalid value $value shall be integer" >&2 
-			let PEGASO_env_param_errors+=1		    
+			let PEGASUS_env_param_errors+=1		    
 		    fi		
 		    ;;
 		uint)
 		    if [[ ! "$value" == +([0-9]) ]] ; then
 			echo "$var has invalid value $value shall be unsigned integer" >&2 
-			let PEGASO_env_param_errors+=1		    
+			let PEGASUS_env_param_errors+=1		    
 		    fi	
 		    ;;
 		file)
 		    if [ ! -f "$value" ]; then
 			echo "$var hold unexisting filename: $value" >&2 
-			let PEGASO_env_param_errors+=1	    
+			let PEGASUS_env_param_errors+=1	    
 		    fi
 		    ;;
 		dir)
 		    if [ ! -d "$value" ]; then
 			echo "$var hold unexisting dirname: $value" >&2 
-			let PEGASO_env_param_errors+=1	    
+			let PEGASUS_env_param_errors+=1	    
 		    fi
 		    ;;
 		bool)
@@ -111,23 +111,23 @@ function param2env_process() {
 			    ;;
 			*)
 			    echo "$var shall be bool expected values: 0||N|F|FALSE|NO|1|Y|T|TRUE|YES , but found: $value" >&2 
-			    let PEGASO_env_param_errors+=1	    
+			    let PEGASUS_env_param_errors+=1	    
 			    ;;
 		    esac
 		    ;;
 		*)
-		    echo "invalid type for ${PEGASO_VALID_ENV_PARAMS[${var}]} (script internal error)" >&2 
-		    let PEGASO_env_param_errors+=1
+		    echo "invalid type for ${PEGASUS_VALID_ENV_PARAMS[${var}]} (script internal error)" >&2 
+		    let PEGASUS_env_param_errors+=1
 		    ;;
 	    esac
 	    eval "$var=\"$value\""
-	    [[ $PEGASO_BASH_IMPORT_VERBOSE -eq 1 ]] && eval echo "PARAM2ENV: $var=\$$var"
+	    [[ $PEGASUS_BASH_IMPORT_VERBOSE -eq 1 ]] && eval echo "PARAM2ENV: $var=\$$var"
 	else
 	    # other parameters not recognized as valid X=V are pushed here:
-	    PEGASO_ENV_PARAMS_NOT_PROCESSED+=("$_PP")
-	    # echo ${PEGASO_ENV_PARAMS_NOT_PROCESSED} >> /tmp/pppp
-	    [[ -n $_PP2 ]] && PEGASO_ENV_PARAMS_NOT_PROCESSED+="$_PP2"
+	    PEGASUS_ENV_PARAMS_NOT_PROCESSED+=("$_PP")
+	    # echo ${PEGASUS_ENV_PARAMS_NOT_PROCESSED} >> /tmp/pppp
+	    [[ -n $_PP2 ]] && PEGASUS_ENV_PARAMS_NOT_PROCESSED+="$_PP2"
 	fi
     done
-    return $PEGASO_env_param_errors
+    return $PEGASUS_env_param_errors
 }

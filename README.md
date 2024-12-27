@@ -17,7 +17,7 @@ git clone https://github.com/bzimage-it/pegasus-bash/
 2. set ```PEGASUS_BASH_ROOT``` properly; you can do at beginning of your script:
 ```
 #!/bin/bash
-PEGASUS_BASH_ROOT=$HOME/my/dir
+PEGASUS_BASH_ROOT=$HOME/my/dir/pegasus-bash
 source $PEGASUS_BASH_ROOT/pegasus-bash.sh all
 # ....my code follows....
 ```
@@ -25,7 +25,7 @@ note that setting of ```PEGASUS_BASH_ROOT``` is mandatory before to ```source(1)
 
 3. you may want to ```export``` it in ```.bashrc```, or wherever you like:
 
-```export PEGASUS_BASH_ROOT=$HOME/my/dir```
+```export PEGASUS_BASH_ROOT=$HOME/my/dir/pegasus-bash```
 
 # Quick start
 

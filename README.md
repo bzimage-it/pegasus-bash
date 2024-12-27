@@ -4,15 +4,8 @@ Bash improvement and enhancements likes: parameter management via environment va
 
 # Quick reference
 
-
-
 ```
-~/git/pegasus-bash/examples$ bash quickstart.sh foo=123 A=astring Directory= /tmp/
-PEGASUS-BASH load: /home/sebastiani/git/pegasus-bash/lib/location.lib.sh  [OK]
-PEGASUS-BASH load: /home/sebastiani/git/pegasus-bash/lib/param2env.lib.sh  [OK]
-PEGASUS-BASH load: /home/sebastiani/git/pegasus-bash/lib/temp.lib.sh  [OK]
-PEGASUS-BASH load: /home/sebastiani/git/pegasus-bash/lib/log.lib.sh  [OK]
-PEGASUS-BASH load: /home/sebastiani/git/pegasus-bash/lib/debug.lib.sh  [OK]
+$ bash quickstart.sh foo=123 A=astring Directory= /tmp/
 NOTIF|my own canonical full name is: /home/sebastiani/git/pegasus-bash/examples/quickstart.sh
 NOTIF|my own canonical location is : /home/sebastiani/git/pegasus-bash/examples
 NOTIF|my own name is               : quickstart.sh

@@ -1,11 +1,11 @@
 # pegasus-bash
 a Bash API improvement and enhancements with logging, debugging, command parameters and more.
 * includes different modules to be imported via ```source(1)```
-* ```log```: a powerfull logging API with log levels, colors, custom formatting, writes to different output descriptors
-* ```param2env``` : maps command line parameters to ordinary environment variables, likes ```env(1)``` command. A valid alternarnavite to classic ```getopt``` or ```--option``` style cli.
+* ```log```: a powerful logging API with log levels, colors, custom formatting, writes to different output descriptors
+* ```param2env``` : maps command line parameters to ordinary environment variables, likes ```env(1)``` command. A valid alternative to classic ```getopt``` or ```--option``` style cli.
 * ```location``` : knows where its own script is located, regardless of symlinks.
 * ```temp``` : provides temporary files via ```mktemp(1)```, hold names in order to be remoted at exit; the programmer can forget names and call a cleanup method when exit
-* ```debug``` : provides ```assert()``` function, bash strack and unix stack trace dump 
+* ```debug``` : provides ```assert()``` function, a bash stack and a unix stack trace dump functions
 
 # Quick start
 
@@ -38,15 +38,15 @@ source $PEGASUS_BASH_ROOT/pegasus-bash.sh all
 note that setting of ```PEGASUS_BASH_ROOT``` is mandatory before to ```source(1)``` ```pegasus-bash```
 
 # Quality 
-target of this project is to have a good testing and a good code review. This will be available in 1.0.0 release.
+target of this project is to have good testing and a good code review. This will be available in 1.0.0 release.
 
 the script ```bash quality.sh``` 
 
-it helps to run static analysis (via [shellcheck](https://www.shellcheck.net/)) and dinamic testing (via [bats-core](https://github.com/bats-core/bats-core); you needs both of them to test ```pegasus-bash```
+it helps to run static analysis (via [shellcheck](https://www.shellcheck.net/)) and dynamic/unit testing (via [bats-core](https://github.com/bats-core/bats-core); you needs both of them to test ```pegasus-bash```
 
 Any recent linux distro shall works (but also not-too-much-older ones!)  it have been tested successfully on:
 * ```bash 5.2.21`` on ```Ubuntu 24.04.1 LTS"
-Let me know other tests setup that are working or not working. Thank you!
+Let me know other test setup that is working or not. Thank you!
 
 # To do
 

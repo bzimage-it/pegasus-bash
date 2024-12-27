@@ -20,6 +20,10 @@ declare -A PEGASUS_VALID_ENV_HELP=(
 PEGASUS_BASH_IMPORT_VERBOSE=1 # default is 0, do not write info during parse
 source $PEGASUS_BASH_ROOT/pegasus-bash.sh all
 
+log notif "my own canonical full name is: $PEGASUS_SCRIPT_FULL"
+log notif "my own canonical location is : $PEGASUS_SCRIPT_DIR"
+log notif "my own name is               : $PEGASUS_SCRIPT_FILE"
+
 if [ $# == 0 ]; then
     param2env_help_table
     log info
@@ -34,7 +38,8 @@ else
     if [ ${#PEGASUS_ENV_PARAMS_NOT_PROCESSED[@]} -eq  0 ]; then
 	log info "No extra params, ok"
     else
-	abort 10 "some parameter is unknown ${PEGASUS_ENV_PARAMS_NOT_PROCESSED[@]}"
+	log error "some parameter is unknown ${PEGASUS_ENV_PARAMS_NOT_PROCESSED[@]}"
+	abort 10 "exit the script"
     fi
 fi
 

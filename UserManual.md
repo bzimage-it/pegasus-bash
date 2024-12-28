@@ -39,7 +39,7 @@ In order to import one or more *PACKAGES* you should:
 1. define PEGASUS_BASH_ROOT to point to the root directory where program is installed. A file named ```pegaso-bash.sh``` shall be present there. You can do that at the very beginnig of your script or export it in your bash initialization file, for example ```.bashrc```.
 2. execute a *source* command to import:
 ```$PEGASUS_BASH_ROOT/pegasus-bash.sh```
-followed by one or more *PACKAGES* indicating the list packages to be used by the script
+followed by one or more *PACKAGES* indicating the list packages to be used by the script.
 
 log package API
 ===============
@@ -49,27 +49,11 @@ Overview
 
 
 
+Functions
+--------
 
 
-`-h, --help`
 
-:   Show the help message and exit
-
-`-c, --cli WALLPAPER_PATHS...`
-
-:   Set wallpapers from the command line
-
-`-m, --modes WALLPAPER_MODES...`
-
-:   Specify the modes for the wallpapers (`zoom`, `center_black`, `center_blur`, `fit_black`, `fit_blur`)
-
-`-r, --random`
-
-:   Set wallpapers randomly
-
-`-l, --lockscreen`
-
-:   Set lockscreen wallpapers instead of desktop ones (for supported desktop environments)
 
 BUGS
 ====

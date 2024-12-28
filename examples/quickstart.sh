@@ -37,10 +37,11 @@ function on_exit() {
     unix_stack_trace debug
 }
 
-log notif "my own canonical full name is: $PEGASUS_SCRIPT_FULL"
-log notif "my own canonical location is : $PEGASUS_SCRIPT_DIR"
-log notif "my own name is               : $PEGASUS_SCRIPT_FILE"
-
+log_conf mode default
+log notif "full name    : $PEGASUS_SCRIPT_FULL"
+log notif "canonical dir: $PEGASUS_SCRIPT_DIR"
+log notif "my name is   : $PEGASUS_SCRIPT_FILE"
+log_conf mode debug-full
 if [ $# == 0 ]; then
     param2env_help_table
     log info

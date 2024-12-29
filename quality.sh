@@ -24,7 +24,7 @@ do
 	    ;;
 	md2man)
 		set +x
-		pandoc --standalone --to man UserManual.md -o pegasus-bash.3
+		pandoc --standalone -f gfm --to man UserManual.md -o pegasus-bash.3
 		;;
 	quit)
 	    echo "bye!"

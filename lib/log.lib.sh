@@ -309,7 +309,7 @@ log() {
 log_set_fd () { #  <fd> [<level1> [<level2> ... ]] : set levels to log to the given new file descriptor id; if no level given, all levels are processed
     local fd="$1"
     if [[ ! $fd =~ ^[0-9]+$ ]]; then # if is a number
-	log warn "log_set_fd: passed fd=$fd not a number, ignoring"
+	_log_error "log_set_fd: passed fd=$fd not a number, ignoring"
     fi
     shift
     local n=    
